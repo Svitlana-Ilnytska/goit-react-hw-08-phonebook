@@ -52,7 +52,7 @@ export default function App() {
         <ColorModeProvider>
           <CSSReset />
 
-          {/* <Navigation /> */}
+          <Navigation />
 
           {isRefreshing ? (
             <Flex
@@ -118,7 +118,7 @@ export default function App() {
 
               <Routes>
                 <Route path="/" 
-                element={<Navigation />}
+                // element={<Navigation />}
                 
                 >
                   <Route index element={<HomePage />} />

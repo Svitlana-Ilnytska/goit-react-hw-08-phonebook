@@ -2,7 +2,7 @@ import { useAuth } from 'hooks';
 import { Navigate } from 'react-router-dom';
 
 export default function PublicRoute  ({ component: Component, redirectTo = '/' }) {
-  const { isLoggedIn } = useAuth();
+  const { token } = useAuth();
 
-  return isLoggedIn ? <Navigate to={redirectTo} /> : Component;
+  return token ? <Navigate to={redirectTo} /> : Component;
 };

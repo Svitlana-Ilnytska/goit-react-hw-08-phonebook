@@ -9,6 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from 'redux-persist';
+import { userApi } from './auth/userApi';
 import storage from 'redux-persist/lib/storage';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import authReducer from './auth/slice'
@@ -19,13 +20,14 @@ import  filter from "./contacts/contacts-reducer";
 const authPersistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['token'],
+  whitelist: ['token', 'user'],
 };
 
 const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
     [authUserApi.reducerPath]: authUserApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
     [contactApi.reducerPath]: contactApi.reducer,
     filter,
   },
@@ -36,6 +38,7 @@ const store = configureStore({
       },
     }),
     authUserApi.middleware,
+    userApi.middleware,
     contactApi.middleware,
   ],
   devTools: process.env.NODE_ENV !== 'production',

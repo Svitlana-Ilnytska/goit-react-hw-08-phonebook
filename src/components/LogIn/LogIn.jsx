@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate  } from "react-router-dom";
 import { useLogInUserMutation } from "../../redux/auth/operations";
 import { setToken } from "../../redux/auth/slice";
 
@@ -24,7 +23,6 @@ export default function LogIn() {
   const [login] = useLogInUserMutation();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const toast = useToast();
 
   const handleChange = (e) => {
@@ -63,7 +61,7 @@ export default function LogIn() {
           duration: 9000,
           isClosable: true,
         });
-        navigate("/contacts");
+
         reset();
       } catch (err) {
         toast({

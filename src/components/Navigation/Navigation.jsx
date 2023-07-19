@@ -1,6 +1,5 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { useLogOutUserMutation } from "../../redux/auth/operations";
 import { setlogOut } from "../../redux/auth/slice";
 import { useAuth } from "../../hooks";
@@ -16,10 +15,8 @@ export default function Navigation() {
   const [logout] = useLogOutUserMutation();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const toast = useToast();
-  const { isLoggedIn } = useAuth();
-  const { user } = useAuth();
+  const { user, token } = useAuth();
 
 
     const logoutUser = async () => {
@@ -27,7 +24,6 @@ export default function Navigation() {
       const result = await logout();
       if (result.data) {
         dispatch(setlogOut());
-        navigate("/login");
       }
     } catch (err) {
       toast({
@@ -65,7 +61,7 @@ export default function Navigation() {
             </Box>
 
             <Stack direction={"row"} spacing={7}>
-              {user && isLoggedIn ? (
+              {user && token ? (
                 <UserMenu
                   name={user.name}
                   email={user.email}

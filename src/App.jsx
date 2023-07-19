@@ -1,10 +1,6 @@
 import React, { lazy, Suspense  } from "react";
-import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useFetchUserQuery } from "./redux/auth/operations";
-import { useDispatch } from "react-redux";
 import { useAuth } from "./hooks";
-import { refreshUser } from "./redux/auth/slice";
 import Navigation from "./components/Navigation/Navigation";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
@@ -24,27 +20,7 @@ const LogInPage = lazy(() => import("./views/LogInPage/LogInPage"));
 const ContactsPage = lazy(() => import("./views/ContactsPage/ContactsPage"));
 
 export default function App() {
-  const dispatch = useDispatch();
-  const { token } = useAuth();
-
-  const { data: user } = useFetchUserQuery(token, {
-    skip: token === null,
-  });
-
-  const { isRefreshing } = useAuth(token);
-
-  // useEffect(() => {
-  //   dispatch(refreshUser());
-  // }, [ dispatch]);
-
-  useEffect(() => {
-    (async () => {
-      await user;
-      if (user) {
-        dispatch(refreshUser(user));
-      }
-    })();
-  }, [user, dispatch]);
+  const { isRefreshing } = useAuth();
 
   return (
     <div>
@@ -90,37 +66,8 @@ export default function App() {
                 </Flex>
               }
             >
-              {/* <Switch>
-                  <Route exact path="/" component={HomePage} />
-
-                  <PublicRoute
-                    restricted
-                    path="/register"
-                    redirectTo="/contacts"
-                    component={SignUpPage}
-                  />
-
-                  <PublicRoute
-                    restricted
-                    path="/login"
-                    redirectTo="/contacts"
-                    component={LogInPage}
-                  />
-
-                  <PrivateRoute
-                    path="/contacts"
-                    redirectTo="/login"
-                    component={ContactsPage}
-                  />
-
-                  <Redirect to="/" />
-                </Switch> */}
-
               <Routes>
-                <Route path="/" 
-                // element={<Navigation />}
-                
-                >
+                <Route path="/"  >
                   <Route index element={<HomePage />} />
                   <Route
                     path="/register"

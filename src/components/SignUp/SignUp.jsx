@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate  } from "react-router-dom";
 import { useCreateUserMutation } from "../../redux/auth/operations";
 import { setToken } from "../../redux/auth/slice";
 
@@ -24,7 +23,7 @@ export default function SignUp() {
   const [createUser] = useCreateUserMutation();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const toast = useToast();
 
   const handleChange = (e) => {
@@ -68,7 +67,7 @@ export default function SignUp() {
           duration: 9000,
           isClosable: true,
         });
-        navigate("/contacts");
+
         reset();
       } catch (err) {
         toast({
